@@ -51,6 +51,8 @@ public class SignUpActivity extends AppCompatActivity {
         });
         //載入大頭貼---step3     請求相簿
         binding.layoutImage.setOnClickListener(v ->{
+            //https://developer.android.com/reference/android/content/Intent
+            //https://hjwang520.pixnet.net/blog/post/404661691-%E9%81%B8%E5%8F%96%E5%8F%8A%E8%A4%87%E8%A3%BDandroid%E6%89%8B%E6%A9%9F%E5%9C%96%E7%89%87-%E4%BD%BF%E7%94%A8mediastore
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             pickImage.launch(intent);

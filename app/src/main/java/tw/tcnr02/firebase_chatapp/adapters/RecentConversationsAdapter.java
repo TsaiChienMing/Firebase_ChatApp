@@ -55,6 +55,7 @@ public class RecentConversationsAdapter extends RecyclerView.Adapter<RecentConve
             super(itemContainerRecentConversionBinding.getRoot());
             binding = itemContainerRecentConversionBinding;
         }
+        //View bind Data
         void setData(ChatMessage chatMessage){
             binding.imageProfile.setImageBitmap(getConversionImage(chatMessage.conversionImage));
             binding.textName.setText(chatMessage.conversionName);
@@ -64,6 +65,7 @@ public class RecentConversationsAdapter extends RecyclerView.Adapter<RecentConve
                 user.id = chatMessage.conversinId;
                 user.name = chatMessage.conversionName;
                 user.image = chatMessage.conversionImage;
+                //Intent to ChatActivity
                 conversionListener.onConversionClicked(user);
             });
         }

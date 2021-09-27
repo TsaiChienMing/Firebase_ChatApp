@@ -90,6 +90,9 @@ public class MainActivity extends BaseActivity implements ConversionListener {
             return;
         }
         if (value != null){
+            //A DocumentChange represents a change to the documents matching a query.
+            // It contains the document affected and a the type of change that occurred (added, modified, or removed).
+            //更新Firestore資料。
             for(DocumentChange documentChange : value.getDocumentChanges()){
                 if (documentChange.getType() == DocumentChange.Type.ADDED){
                     String senderId = documentChange.getDocument().getString(Constants.KEY_SENDER_ID);
@@ -121,7 +124,17 @@ public class MainActivity extends BaseActivity implements ConversionListener {
                     }
                 }
             }
+            //https://codertw.com/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/313776/
+            //Collections.sort用於元素的排序(默認升序)。
+            //Collections.sort(list, new PriceComparator());的第二個引數返回一個int型的值，
+            // 就相當於一個標誌，告訴sort方法按什麼順序來對list進行排序。
+            //此處是排序時間順序。
+            //compare（a,b）方法:根據第一個引數小於、等於或大於第二個引數分別返回負整數、零或正整數。
             Collections.sort(conversations,(obj1,obj2) -> obj2.dateObject.compareTo(obj1.dateObject));
+
+            //https://blog.melove.net/android-develop-recyclerview-notifydatasetchanged-pit/
+            //https://www.codenong.com/1667931667377631744/
+            // notifyDataSetChanged()方法刷新ListView
             conversationsAdapter.notifyDataSetChanged();
             binding.conversationRecyclerview.smoothScrollToPosition(0);
             binding.conversationRecyclerview.setVisibility(View.VISIBLE);
@@ -166,11 +179,11 @@ public class MainActivity extends BaseActivity implements ConversionListener {
 
     }
 
+    //Adapter的資料User，透過Intent傳至ChatActivity。
     @Override
     public void onConversionClicked(User user) {
         Intent intent = new Intent(getApplicationContext(),ChatActivity.class);
         intent.putExtra(Constants.KEY_USER,user);
         startActivity(intent);
-
     }
 }
