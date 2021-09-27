@@ -11,6 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Firebase_ChatApp">
+<!--itread01.com/content/1548949356.html-->
+<!--   解決軟鍵盤與layout衝突問題     -->
         <activity
             android:name=".activities.ChatActivity"
             android:exported="true"

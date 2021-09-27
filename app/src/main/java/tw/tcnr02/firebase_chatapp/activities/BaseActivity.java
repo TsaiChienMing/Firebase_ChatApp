@@ -13,6 +13,9 @@ import tw.tcnr02.firebase_chatapp.utilities.PreferenceManager;
 
 public class BaseActivity extends AppCompatActivity {
 
+    //Console.firebase.google.com/u/0/project/chatapp-ca287/notification
+    //A DocumentReference refers to a document location in a Cloud Firestore database
+    // and can be used to write, read, or listen to the location.
     private DocumentReference documentReference;
 
     @Override
@@ -20,6 +23,7 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         PreferenceManager preferenceManager = new PreferenceManager(getApplicationContext());
         FirebaseFirestore database = FirebaseFirestore.getInstance();
+
         documentReference = database.collection(Constants.KEY_COLLECTION_USERS)
                 .document(preferenceManager.getString(Constants.KEY_USER_ID));
     }

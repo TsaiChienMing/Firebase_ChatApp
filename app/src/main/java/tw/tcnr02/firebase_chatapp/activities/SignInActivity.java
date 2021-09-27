@@ -26,7 +26,7 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         preferenceManager = new PreferenceManager(getApplicationContext());
-        //判斷是否為登入狀態
+        //判斷是否為已登入狀態  預設false
         if(preferenceManager.getBoolean(Constants.KEY_IS_SIGNED_IN)){
             Intent intent = new Intent(getApplicationContext(),MainActivity.class);
             startActivity(intent);
@@ -51,17 +51,20 @@ public class SignInActivity extends AppCompatActivity {
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         //集合（collection）類似關聯式資料庫的資料表
         database.collection(Constants.KEY_COLLECTION_USERS)
-                //傳入信箱和密碼 EMAIL PASSWORD
+                //傳入信箱和密碼 EMAIL PASSWORD確認資料庫是否有該筆資料。
                 .whereEqualTo(Constants.KEY_EMAIL,binding.inputEmail.getText().toString())
                 .whereEqualTo(Constants.KEY_PASSWORD,binding.inputPassword.getText().toString())
-                .get()
-                //要取回資料一樣透過 .addOnCompleteListener 中的 task.result 去得到資料集合
+                .get()//Executes the query and returns the results as a QuerySnapshot.
+                //透過 .addOnCompleteListener 中的 task.result 去得到資料集合
                 .addOnCompleteListener(task->{
                     //兩者皆與後台相同則取得 ID NAME IMAGE
                     //判斷是否登入正確、是否有資料、資料數量>0
                     if (task.isSuccessful() && task.getResult() != null
                     && task.getResult().getDocuments().size() > 0){
+                        //https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/DocumentSnapshot
                         //查詢結果是以DocumentSnapshot物件的形式出現
+                        //A DocumentSnapshot contains data read from a document in your Cloud Firestore database.
+                        // The data can be extracted with the getData() or get(String) methods.
                         DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
                         preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN,true);
                         preferenceManager.putString(Constants.KEY_USER_ID,documentSnapshot.getId());
